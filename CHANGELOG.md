@@ -1,3 +1,3 @@
-## 0.0.1
+## 1.0.0
 - Manage Network errors
 - Manage Generic errors
