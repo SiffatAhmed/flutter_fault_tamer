@@ -45,9 +45,9 @@ Widget  build(BuildContext  context) {
 	return  MaterialApp(
 		title: 'Flutter Demo',
 		theme: ThemeData(
-				colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-				useMaterial3: true,
-			),
+			colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+			useMaterial3: true,
+		),
 		home: const  MyHomePage(),
 		);
 	}
@@ -64,67 +64,64 @@ class  _MyHomePageState  extends  State<MyHomePage> {
 
 final  faultTamer = FlutterFaultTamer();
 
-	networkCall() async {
-		// Returns data from API call response from dio package or Error String.
-		var  result = await  faultTamer.networkCallTamer(() async => await (Dio().get('https://dart.dev')));
+networkCall() async {
+	// Returns data from API call response from dio package or Error String.
+	var  result = await  faultTamer.networkCallTamer(() async => await (Dio().get('https://dart.dev')));
 
-		log(result.toString());
+	log(result.toString());
 
-		result = await  faultTamer.networkCallTamer(() async => await (Dio().get('https://dart.de')));
+	result = await  faultTamer.networkCallTamer(() async => await (Dio().get('https://dart.de')));
 
-		log(result.toString());  
+	log(result.toString());  
 
-		log("=======================================================");
+	log("=======================================================");
 
-		genericExceptionHandlingCall();
+	genericExceptionHandlingCall();
 
-		log("=======================================================");
-
-		genericExceptionHandlingCallFuture();
-	}
+	log("=======================================================");
+	genericExceptionHandlingCallFuture();
+}
 
   
 
-	genericExceptionHandlingCall() {
-		int  number = 5;
+genericExceptionHandlingCall() {
+	int  number = 5;
 		
-		// This will not throw error
-		var  result = faultTamer.genericCodeTamer(() => number = 6);
+	// This will not throw error
+	var  result = faultTamer.genericCodeTamer(() => number = 6);
 		
-		log(result.toString());
+	log(result.toString());
 
-		// This will throw error of unsupported operation as division by zero is not allowed.
-		result = faultTamer.genericCodeTamer(() {
+	// This will throw error of unsupported operation as division by zero is not allowed.
+	result = faultTamer.genericCodeTamer(() {
 		number = number ~/ 0;
-		});
+	});
 		
-		log(result.toString());
-	}
+	log(result.toString());
+}
 
   
 
-	genericExceptionHandlingCallFuture() async {
+genericExceptionHandlingCallFuture() async {
 
-		// This will not throw error
-		var  result = await  faultTamer.genericCodeTamerForFuture(() async => await (Dio().get('https://dart.dev')));
+	// This will not throw error
+	var  result = await  faultTamer.genericCodeTamerForFuture(() async => await (Dio().get('https://dart.dev')));
 
-		log(result.toString());
+	log(result.toString());
 
-		// This will throw error of unsupported operation as division by zero is not allowed.
-		result = await  faultTamer.genericCodeTamerForFuture(() async => await (Dio().get('https://dart.dv')));
+	// This will throw error of unsupported operation as division by zero is not allowed.
+	result = await  faultTamer.genericCodeTamerForFuture(() async => await (Dio().get('https://dart.dv')));
 
-		log(result.toString());
-
-	}
+	log(result.toString());
+}
 
   
 
-	@override
-
-	void  initState() {
-		networkCall();
-		super.initState();
-	}
+@override
+void  initState() {
+	networkCall();
+	super.initState();
+}
 
   
 
