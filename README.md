@@ -8,7 +8,7 @@ FlutterFaultTamer is a Flutter package designed to streamline error handling in 
 To use FlutterFaultTamer in your Flutter project, add the following dependency to your `pubspec.yaml` file:
 
     dependencies:
-	    flutter_fault_tamer: ^1.0.0
+	    flutter_fault_tamer: ^0.0.1
 **OR**
 
     flutter pub get flutter_fault_tamer
