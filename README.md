@@ -68,7 +68,7 @@ networkCall() async {
 	// Returns data from API call response from dio package or Error String.
 	var  result = await  faultTamer.networkCallTamer(() async => await (Dio().get('https://dart.dev')));
 
-	log(result.toString());
+	log(result['result'].toString());
 
 	result = await  faultTamer.networkCallTamer(() async => await (Dio().get('https://dart.de')));
 
