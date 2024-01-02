@@ -1,6 +1,6 @@
 name: flutter_fault_tamer
 description: "FlutterFaultTamer is a Flutter package designed to streamline error handling in your Dart and Flutter projects, especially when dealing with network calls using the Dio package. It provides a set of functions to tame and handle errors gracefully, making your code more robust and user-friendly."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/SiffatAhmed/flutter_fault_tamer.git
 
 environment:

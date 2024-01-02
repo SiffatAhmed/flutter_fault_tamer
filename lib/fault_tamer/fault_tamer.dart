@@ -1,3 +1,4 @@
+import "dart:developer";
 import "dart:io";
 
 import "package:dio/dio.dart" as dio;
@@ -7,12 +8,14 @@ class FlutterFaultTamer {
   /// Returns data from API call response from dio package or Error String.
   /// network call looks as follows
   /// `() async => await Dio().get('https://dart.dev')`
+  /// for correct case return {'result': response.data};
+  /// for error case 'some string specifying error'
   networkCallTamer(Future Function() networkCall) async {
     try {
       dio.Response<dynamic> response = await (networkCall.call());
       switch (response.statusCode) {
         case 200:
-          return response.data;
+          return {"result": response.data};
         case 400:
           throw (response.statusMessage ?? "When wrong data/parameter is sent to the API.");
         case 401:
@@ -40,6 +43,7 @@ class FlutterFaultTamer {
       return "No Internet Connection.";
     } catch (e) {
       if (e is dio.DioException) {
+        log(e.toString());
         return _dioExceptionHandler(e);
       }
       return e.toString();
@@ -47,9 +51,9 @@ class FlutterFaultTamer {
   }
 
   /// Returns data error if any else null
-  String? genericCodeTamer(Function() networkCall) {
+  String? genericCodeTamer(Function() function) {
     try {
-      networkCall.call();
+      function.call();
       return null;
     } on HttpException {
       return "No Internet Connection.";
@@ -118,7 +122,9 @@ class FlutterFaultTamer {
     else if (e.type == dio.DioExceptionType.connectionTimeout)
       return "Request timedout please try again.";
     else if (e.type == dio.DioExceptionType.connectionError)
-      return "Network error please check your internet.";
+      return e.error.toString().toLowerCase().contains("No address associated with hostname".toLowerCase())
+          ? "Could not find specified server."
+          : "Network error please check your internet.";
     else if (e.type == dio.DioExceptionType.cancel)
       return "Request cancelled.";
     else if (e.type == dio.DioExceptionType.badResponse)
